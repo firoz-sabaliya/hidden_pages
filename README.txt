@@ -20,4 +20,4 @@ Content Type of Node should be Page type
 
 Development
 -----------
-Hidden Pages was developed Firoz Sabaliya
+Hidden Pages was developed by Firoz Sabaliya
