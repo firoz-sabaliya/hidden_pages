@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * This module creats new field on Site information Page.
+ */
+
+/**
+ * Implements hook_form_system_site_information_settings_alter().
+ */
+function hidden_pages_form_system_site_information_settings_alter(&$form, $form_state, $form_id) {
+
+  // Add a text field named siteapikey.
+  $form['site_information']['siteapikey'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Site API Key'),
+    '#default_value' => variable_get('siteapikey', 'No API Key yet'),
+  );
+  if (!empty(variable_get('siteapikey'))) {
+    $form['actions']['submit']['#value'] = t('Update Configuration');
+  }
+  $form['#submit'][''] = 'hidden_pages_handler';
+}
+/**
+ * Implements hook_handler().
+ */
+function hidden_pages_handler($form, &$form_state) {
+
+  // Set drupal variable siteapikey.
+  variable_set('siteapikey', $form_state['values']['siteapikey']);
+  $siteapikey = $form_state['values']['siteapikey'];
+  drupal_set_message(t('Site API Key has been saved with value @apikey', array('@apikey' => $siteapikey)), $type = 'status');
+}
+
+/**
+ * Implements hook_menu().
+ */
+function hidden_pages_menu() {
+
+  // Create a URL as per requirement.
+  $items['page_json/%/%'] = array(
+    'file' => 'hidden_pages.page.inc',
+    'page callback' => 'page_show',
+    'page arguments' => array(1, 2),
+    'access arguments' => array('access site information'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}

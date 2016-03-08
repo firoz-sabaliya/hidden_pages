@@ -1,0 +1,20 @@
+<?php
+/**
+ * @file
+ * Installation file for the Hidden Pages module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function hidden_pages_install() {
+  $t = get_t();
+  drupal_set_message($t('Hidden Pages has been installed. The Module settings are available under <a href="@link">Administer > Site configuration > System > Site Information</a>.', array('@link' => url('admin/config/system/site-information'))));
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function hidden_pages_uninstall() {
+  variable_del('siteapikey');
+}
